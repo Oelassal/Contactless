@@ -1,0 +1,40 @@
+<div class="main-container">
+  <app-history-panel id="history-panel" [historyItems]="historyItems" (restoreHistoryItem)="restoreFromHistory($event)"></app-history-panel>
+
+  <div class="form-container">
+    <h2>Contacless Form</h2>
+    <form [formGroup]="form">
+      <div>
+        <label for="name">Name:</label>
+        <input id="name" formControlName="name" type="text" />
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input id="email" formControlName="email" type="email" />
+      </div>
+      <div>
+        <label for="age">Age:</label>
+        <input id="age" formControlName="age" type="number" />
+      </div>
+      <div class="checkbox-container">
+        <input id="subscribed" formControlName="subscribed" type="checkbox" />
+        <label for="subscribed">Subscribe to newsletter</label>
+      </div>
+      <div>
+        <label for="category">Category:</label>
+        <select id="category" formControlName="category">
+          <option value="">Select a category</option>
+          <option value="basic">Basic</option>
+          <option value="premium">Premium</option>
+          <option value="vip">VIP</option>
+        </select>
+      </div>
+    </form>
+
+    <div class="buttons">
+      <button class="undo" (click)="undo()" [disabled]="!canUndo()">Undo</button>
+      <button class="redo" (click)="redo()" [disabled]="!canRedo()">Redo</button>
+      <button class="reset" (click)="reset()">Reset</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="history-panel">
+  <h3>History</h3>
+  <ul>
+    <li *ngFor="let item of historyItems; let i = index" (click)="onSelectHistoryItem(i)">
+      <strong>Change {{ i + 1 }}:</strong>
+      <div *ngFor="let line of getFormattedHistoryItem(item)">
+        {{ line }}
+      </div>
+    </li>
+  </ul>
+</div>
