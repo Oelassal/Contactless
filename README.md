@@ -1,5 +1,6 @@
 # ContactlessDemo
 This Angular project manages a reactive form created for Contactless.io with features for undoing, redoing, and resetting the form state. It provides user feedback through toast notifications for actions performed as well as history to track and manage user actions taken on this form.
+![image](https://github.com/user-attachments/assets/e60a6972-93b5-4f23-a9bb-f99370e0b9be)
 
 ## Features
 
