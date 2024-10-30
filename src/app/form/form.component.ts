@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-form',
@@ -12,7 +13,7 @@ export class FormComponent implements OnInit {
   redoStack: any[] = [];
   historyItems: any[] = [];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private snackBar: MatSnackBar) {
     this.form = this.fb.group({
       name: [''],
       email: [''],
@@ -45,6 +46,7 @@ export class FormComponent implements OnInit {
       this.redoStack.push(this.deepCopy(this.form.value));
       this.historyItems.pop();
       this.form.setValue(lastState, { emitEvent: false });
+      this.showToast('Undo action performed');
     }
   }
 
@@ -54,6 +56,7 @@ export class FormComponent implements OnInit {
       this.undoStack.push(this.deepCopy(this.form.value));
       this.historyItems.push(this.deepCopy(this.form.value));
       this.form.setValue(nextState, { emitEvent: false });
+      this.showToast('Redo action performed');
     }
   }
 
@@ -62,6 +65,7 @@ export class FormComponent implements OnInit {
     this.form.setValue(selectedState, { emitEvent: false });
     this.undoStack = this.historyItems.slice(0, index + 1);
     this.redoStack = [];
+    this.showToast(`Restored to change ${index + 1}`);
   }
 
   reset(): void {
@@ -70,6 +74,7 @@ export class FormComponent implements OnInit {
     this.undoStack = [resetState];
     this.redoStack = [];
     this.historyItems = [resetState];
+    this.showToast('Form has been reset');
   }
 
   private deepCopy<T>(value: T): T {
@@ -82,5 +87,13 @@ export class FormComponent implements OnInit {
 
   canRedo(): boolean {
     return this.redoStack.length > 0;
+  }
+
+  private showToast(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+    });
   }
 }
